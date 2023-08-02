@@ -4,6 +4,17 @@
 
 #include "sys_monitor.hpp"
 
+void sys_monitor_init(void)
+{
+    // initialise the GPIO and ADC
+    gpio_init(23);                              // GPIO23 connected to PS (Power Save) pin - controls switching supply mode
+    gpio_set_dir(23, GPIO_OUT);
+    stdio_init_all();
+    adc_init();
+    adc_gpio_init(29);                          // pin V_sys is connected Pin 29 to pin via /3 voltage divider
+    adc_set_temp_sensor_enabled(true);
+}
+
 // read adc and convert to voltage
 float adc_read_V(void)
 {
